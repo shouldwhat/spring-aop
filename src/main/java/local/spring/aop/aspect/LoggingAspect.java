@@ -22,6 +22,7 @@ public class LoggingAspect
 {
 	private static final Logger LOG = LoggerFactory.getLogger(LoggingAspect.class);
 	
+	/* 표현식 : 지점(접근한정자 패키지경로.메소드명(입력인자)) */
 	@Before("execution(* local.spring.aop..*.*(..))")
 	public void hookBefore(JoinPoint joinPoint)
 	{
