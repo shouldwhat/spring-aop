@@ -27,6 +27,7 @@ public class LoggingAspect
 	{
 		LOG.info("---------------------------------------- aspect hook [BEFORE] !!!");
 		
+		/* approach method input parameters */
 		Object[] args = joinPoint.getArgs();
 		
 		if(args.length > 0 && args[0] instanceof HttpServletRequest)
@@ -60,6 +61,7 @@ public class LoggingAspect
 	{
 		LOG.info("---------------------------------------- aspect hook [AFTER RETURNING] !!!");
 		
+		/* approach method output parameters */
 		LOG.info("---------------------------------------- result = {}", result);
 	}
 	
@@ -68,6 +70,7 @@ public class LoggingAspect
 	{
 		LOG.info("---------------------------------------- aspect hook [AFTER EXCEPTION] !!!");
 		
+		/* approach be throwed Exception */
 		LOG.info("---------------------------------------- expcetion msg = {}", exception.getMessage());;
 	}
 }
