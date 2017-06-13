@@ -22,28 +22,30 @@ public class LoggingAspect
 {
 	private static final Logger LOG = LoggerFactory.getLogger(LoggingAspect.class);
 	
-	/* 표현식 : 지점(접근한정자 패키지경로.메소드명(입력인자)) */
-	@Before("execution(* local.spring.aop..*.*(..))")
-	public void hookBefore(JoinPoint joinPoint)
+	@Before("execution(* local.spring.aop..*.*(..)) && args(request,..)")
+	public void hookBefore(JoinPoint joinPoint, HttpServletRequest request)
 	{
 		LOG.info("---------------------------------------- aspect hook [BEFORE] !!!");
 		
-		/* approach method input parameters */
+		/* [Step.1] approach input arguments of method */
 		Object[] args = joinPoint.getArgs();
 		
-		if(args.length > 0 && args[0] instanceof HttpServletRequest)
+		/* [Step.2-1] first arg : HttpServletRequest */
+		if( (args.length > 0) && (args[0] instanceof HttpServletRequest) )
 		{
 			HttpServletRequest req = (HttpServletRequest) args[0];
 			
 			LOG.info("---------------------------------------- [REQUEST] URI = {}", req.getRequestURI());
 		}
-		if(args.length > 1 && args[1] instanceof Map)
+		/* [Step.2-2] second arg : @PathVariables */
+		if( (args.length > 1) && (args[1] instanceof Map) )
 		{
 			Map<String, Object> pathParam = (Map<String, Object>) args[1];
 			
 			LOG.info("---------------------------------------- [REQUEST] Path Param = {}", pathParam);			
 		}
-		if(args.length > 2 && args[2] instanceof Map)
+		/* [Step.2-3] third : @RequestBody */
+		if( (args.length > 2) && (args[2] instanceof Map) )
 		{
 			Map<String, Object> requestBody = (Map<String, Object>) args[2];
 			
@@ -62,7 +64,7 @@ public class LoggingAspect
 	{
 		LOG.info("---------------------------------------- aspect hook [AFTER RETURNING] !!!");
 		
-		/* approach method output parameters */
+		/* approach output parameters of method */
 		LOG.info("---------------------------------------- result = {}", result);
 	}
 	

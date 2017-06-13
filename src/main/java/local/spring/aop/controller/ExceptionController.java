@@ -20,7 +20,7 @@ public class ExceptionController
 		
 		if(true)
 		{
-			throw new Exception("asdhasdh");
+			throw new Exception("excute force exception");
 		}
 	}
 }
